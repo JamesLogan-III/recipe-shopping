@@ -1,0 +1,60 @@
+import { EventEmitter, Injectable } from '@angular/core';
+
+import { Recipe } from './recipe.model';
+import { Ingredient } from '../shared/ingredient.model';
+import { ShoppingListService } from '../shopping-list/shopping-list.service';
+
+@Injectable()
+export class RecipeService {
+  recipeSelected = new EventEmitter<Recipe>();
+
+  private recipes: Recipe[] = [
+    new Recipe(
+      'Tasty Schnitzel',
+      'A super-tasty Schnitzel - just awesome!',
+      'https://upload.wikimedia.org/wikipedia/commons/7/72/Schnitzel.JPG',
+      [
+        new Ingredient('Meat', 1),
+        new Ingredient('French Fries', 20)
+      ]),
+    new Recipe('Big Fat Burger',
+      'What else you need to say?',
+      'https://upload.wikimedia.org/wikipedia/commons/b/be/Burger_King_Angus_Bacon_%26_Cheese_Steak_Burger.jpg',
+      [
+        new Ingredient('Buns', 2),
+        new Ingredient('Meat', 1)
+      ]),
+    new Recipe(
+      'Beef rice Bowl',
+      'This is a test',
+      'https://i.ytimg.com/vi/Wy15xNBTe2U/maxresdefault.jpg',
+      [
+        new Ingredient('Meat', 1),
+        new Ingredient('Potatoes', 25)
+      ]
+    ),
+    new Recipe(
+      'Eggs in Purgatory',
+      'This is another test',
+      'https://static01.nyt.com/images/2014/09/02/dining/shakshuka/shakshuka-superJumbo-v2.jpg',
+      [
+        new Ingredient('Eggs', 4),
+        new Ingredient('Meat', 1),
+        new Ingredient('Marinara Sauce', 1)
+      ]
+     )
+  ];
+
+  constructor(private slService: ShoppingListService) {
+
+  }
+
+  getRecipes() {
+    return this.recipes.slice();
+  }
+
+  addIngredientsToShoppingList(ingredient: Ingredient[]) {
+    this.slService.addIngredients(ingredient);
+  }
+
+}
